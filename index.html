@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Job Title Family Tree</title>
+<meta name="description" content="An interactive explainer of where software job titles came from, 1940s to now. Fold families, trace any title's lineage. Built on Ian Miell's family tree.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+  <span class="brand"><span class="dot"></span>job title family tree</span>
+  <a class="back" href="https://idvorkin-ai-tools.github.io/">all explainers</a>
+</div></header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">interactive explainer · 104 titles · 7 families · 1940s to now</div>
+    <h1>Where did your job title come from?</h1>
+    <p class="lede">Every software job title has parents. <em>Coder</em> and the human <em>computer</em> became the <em>Programmer</em>; the programmer split into a dozen lines, and those lines are still splitting. This map lets you fold the families you don't care about and trace any one title back to the 1940s.</p>
+    <p class="credit">The family tree (titles, dates, families and every parent link) is <a href="https://ianmiell.github.io/sw-job-title-family-tree/">Ian Miell's</a>; see <a href="https://github.com/ianmiell/sw-job-title-family-tree">his repo</a> for the source graph and to suggest corrections. The interactive layout and the short write-ups here are new.</p>
+  </section>
+
+  <section class="controls" aria-label="Map controls">
+    <label class="find"><span>Find a title</span>
+      <input id="find" list="titles" placeholder="e.g. SRE, Data Scientist" autocomplete="off">
+      <datalist id="titles"></datalist>
+    </label>
+    <div class="btns">
+      <button type="button" id="openAll">Open as many as fit</button>
+      <button type="button" id="foldAll">Fold all</button>
+    </div>
+    <div class="legend" aria-label="Legend">
+      <span><svg width="30" height="10" aria-hidden="true"><line x1="1" y1="5" x2="29" y2="5" stroke="currentColor" stroke-width="2"/></svg> grew out of</span>
+      <span><svg width="30" height="10" aria-hidden="true"><line x1="1" y1="5" x2="29" y2="5" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/></svg> influence / common move</span>
+      <span><b class="lm">Bold</b> landmark title</span>
+      <span class="hint">Tap a family header to open or fold it. Tap a title to trace its lineage.</span>
+    </div>
+  </section>
+
+  <div id="mapwrap">
+    <div id="heads" role="toolbar" aria-label="Families"></div>
+    <div id="map" aria-label="Job title family tree">
+      <svg id="edges" aria-hidden="true"></svg>
+    </div>
+  </div>
+
+  <section class="prose" id="how">
+    <h2>How collapsing works</h2>
+    <p>Time runs down the page in five-year rows. Each family of jobs is a vertical lane.</p>
+    <ul>
+      <li><b>Folding a family narrows its lane; it doesn't remove anything.</b> Each folded title stays on the map as a dot in its own row, so every line into or out of it is still drawn, to the right place and the right date. Nothing gets summarised as "5 links to Ops".</li>
+      <li><b>Lines are bright when they touch an open family</b> and faint when both ends are folded. You can see where the traffic goes without the labels getting in the way.</li>
+      <li><b>The map always fits your screen width.</b> An open lane needs room for its labels. If opening one more family would squeeze the lanes too thin, the family you opened longest ago folds. A phone shows one open family, a laptop shows all seven.</li>
+      <li><b>Tapping a title traces its lineage.</b> Its direct parents and children light up most. Its wider ancestry and descendants, followed along "grew out of" lines only, light up less. Everything else dims. Influence lines are shown one step out and never followed further, because otherwise <em>Programmer</em> would light up two-thirds of the map.</li>
+      <li><b>Many titles have more than one parent.</b> Twenty-eight titles do: <em>Full-stack</em> comes from both front-end and back-end, and <em>AI Engineer</em> has three parents. That makes it a web, not a tree, which is why nothing here works like a folder you expand. A title appears exactly once, with all its parents pointing at it.</li>
+      <li><b>The address bar remembers the view.</b> Copy the URL to share exactly which families are open and which title is traced.</li>
+      <li><b>Keyboard:</b> Tab to a family header or a title, Enter to open or trace. While tracing, <kbd>↑</kbd> goes to a parent, <kbd>↓</kbd> to a child, <kbd>←</kbd> <kbd>→</kbd> to the previous or next title in the same family, and <kbd>Esc</kbd> stops tracing.</li>
+    </ul>
+    <h2>Reading the dates</h2>
+    <p>A date is roughly when a title became common, not the first time anyone used the words. "c." means approximate. Some titles have a known birthplace, such as <em>Site Reliability Engineer</em> at Google, and the label says so.</p>
+    <h2>The families</h2>
+    <div id="fams"></div>
+    <h2>Credits</h2>
+    <p>Graph: <a href="https://ianmiell.github.io/sw-job-title-family-tree/">Software Industry Job Titles: a family tree</a> by Ian Miell (<a href="https://github.com/ianmiell/sw-job-title-family-tree">source</a>). His page has the full static chart and his own notes on every title. Errors in the write-ups here are ours, not his. Source for this page: <a href="https://github.com/idvorkin-ai-tools/sw-job-title-family-tree-explainer">github.com/idvorkin-ai-tools/sw-job-title-family-tree-explainer</a>.</p>
+  </section>
+</main>
+
+<aside id="panel" hidden aria-live="polite" aria-label="Title details"></aside>
+<script src="app.js"></script>
+</body>
+</html>
